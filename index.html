@@ -3,168 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuantSMC - Institutional Dashboard</title>
-    <!-- Premium Professional Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>LiquidityLogic - Quant Dashboard</title>
+    <!-- Premium FinTech Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Video Background Container -->
-    <div class="video-background-container">
-        <!-- REPLACE 'your-planet-video.mp4' WITH YOUR ACTUAL VIDEO URL -->
-        <video autoplay loop muted playsinline id="bgVideo">
-            <source src="https://cdn.pixabay.com/video/2020/04/17/36365-411475141_large.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
+    <!-- Hardware Accelerated Animated Background (Zero Lag) -->
+    <div class="bg-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
     </div>
 
-    <div class="dashboard-layout glass-panel">
+    <div class="dashboard-wrapper">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-chart-line-up brand-icon"></i>
-                <span class="brand-title">Quant<span class="accent-text">SMC</span></span>
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <span class="brand-text">Liquidity<span class="text-accent">Logic</span></span>
             </div>
             
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-target="section-dashboard">
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-target="dashboard">
                     <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item" data-target="section-order-blocks">
+                </button>
+                <button class="nav-btn" data-target="orderblocks">
                     <i class="fa-solid fa-cubes"></i>
                     <span>Order Blocks</span>
-                </a>
-                <a href="#" class="nav-item" data-target="section-backtesting">
+                </button>
+                <button class="nav-btn" data-target="backtesting">
                     <i class="fa-solid fa-chart-pie"></i>
                     <span>Backtesting</span>
-                </a>
-                <a href="#" class="nav-item" data-target="section-settings">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
-                </a>
+                </button>
+                <button class="nav-btn" data-target="settings">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Parameters</span>
+                </button>
             </nav>
 
             <div class="sidebar-footer">
-                <div class="algo-status-badge">
-                    <span class="pulse-dot"></span>
-                    <span>System Online</span>
+                <div class="status-pill">
+                    <div class="status-dot"></div>
+                    Engine v4.2 Live
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Header (Persistent across sections) -->
-            <header class="top-header">
-                <div class="header-left">
-                    <h1 id="pageTitle">Algorithmic Overview</h1>
-                    <p class="subtitle">Institutional Grade Automated Engine</p>
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <header class="topbar">
+                <div>
+                    <h1 class="page-title" id="pageTitle">Algorithmic Overview</h1>
+                    <p class="page-subtitle">Smart Money Concepts Automated Execution</p>
                 </div>
-                <div class="header-right">
-                    <div class="live-clock" id="liveClock">00:00:00 UTC</div>
-                    <div class="system-toggle-container">
-                        <label class="switch">
+                <div class="topbar-controls">
+                    <div class="clock-display" id="liveClock">00:00:00 UTC</div>
+                    <div class="toggle-wrapper">
+                        <span class="toggle-label" id="systemStatusText">System Active</span>
+                        <label class="theme-switch">
                             <input type="checkbox" id="systemToggle" checked>
-                            <span class="slider round"></span>
+                            <div class="slider round"></div>
                         </label>
-                        <span class="toggle-label" id="toggleStatusText">Active</span>
                     </div>
                 </div>
             </header>
 
-            <!-- SECTION 1: Dashboard (Active by default) -->
-            <div id="section-dashboard" class="content-section active">
-                <section class="metrics-grid">
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span>Daily P&L</span>
-                            <i class="fa-solid fa-wallet icon-success"></i>
-                        </div>
-                        <div class="metric-value text-success" id="dailyPnL">+$3,420.50</div>
-                        <div class="metric-sub text-success">
-                            <i class="fa-solid fa-arrow-trend-up"></i> +4.2% vs yesterday
+            <!-- VIEW: Dashboard -->
+            <div id="view-dashboard" class="view-section active">
+                <div class="bento-grid">
+                    <!-- Metric 1 -->
+                    <div class="bento-card metric">
+                        <div class="metric-icon bg-green-light"><i class="fa-solid fa-arrow-trend-up text-green"></i></div>
+                        <div class="metric-data">
+                            <p class="metric-label">Session P&L</p>
+                            <h2 class="metric-value text-green">+$3,420.50</h2>
                         </div>
                     </div>
-
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span>Win Rate (%)</span>
-                            <i class="fa-solid fa-bullseye icon-primary"></i>
+                    <!-- Metric 2 -->
+                    <div class="bento-card metric">
+                        <div class="metric-icon bg-blue-light"><i class="fa-solid fa-bullseye text-blue"></i></div>
+                        <div class="metric-data">
+                            <p class="metric-label">Win Rate</p>
+                            <h2 class="metric-value">68.4%</h2>
                         </div>
-                        <div class="metric-value" id="winRate">68.4%</div>
-                        <div class="metric-sub">Based on 45 active samples</div>
                     </div>
-
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span>Total Executions</span>
-                            <i class="fa-solid fa-bolt icon-warning"></i>
+                    <!-- Metric 3 -->
+                    <div class="bento-card metric">
+                        <div class="metric-icon bg-orange-light"><i class="fa-solid fa-bolt text-orange"></i></div>
+                        <div class="metric-data">
+                            <p class="metric-label">Executions</p>
+                            <h2 class="metric-value">128</h2>
                         </div>
-                        <div class="metric-value" id="totalExecutions">128</div>
-                        <div class="metric-sub">12 pending structures</div>
                     </div>
-                </section>
+                </div>
 
-                <section class="table-section glass-card">
-                    <div class="section-header">
-                        <h2>Recent Executions</h2>
-                        <button class="action-btn" id="refreshTableBtn">
-                            <i class="fa-solid fa-rotate"></i> Refresh Feed
+                <div class="bento-card table-container">
+                    <div class="table-header">
+                        <h3>Recent FVG Mitigations</h3>
+                        <button class="btn-primary" id="refreshBtn">
+                            <i class="fa-solid fa-rotate-right"></i> Sync Feed
                         </button>
                     </div>
-                    
-                    <div class="table-responsive">
-                        <table class="data-table">
+                    <div class="table-wrapper">
+                        <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Timestamp (UTC)</th>
-                                    <th>Pair</th>
-                                    <th>Setup Type</th>
-                                    <th>Size (Lots)</th>
-                                    <th>Entry Price</th>
-                                    <th>Exit Price</th>
+                                    <th>Time (UTC)</th>
+                                    <th>Asset</th>
+                                    <th>Setup Pattern</th>
+                                    <th>Volume</th>
+                                    <th>Entry</th>
                                     <th>Result</th>
                                 </tr>
                             </thead>
-                            <tbody id="executionsTableBody">
-                                <!-- Populated dynamically -->
+                            <tbody id="executionBody">
+                                <!-- JS Populated -->
                             </tbody>
                         </table>
                     </div>
-                </section>
+                </div>
             </div>
 
-            <!-- SECTION 2: Order Blocks -->
-            <div id="section-order-blocks" class="content-section">
-                <div class="glass-card placeholder-card">
+            <!-- VIEW: Order Blocks (Placeholder) -->
+            <div id="view-orderblocks" class="view-section">
+                <div class="bento-card empty-state">
+                    <div class="empty-icon"><i class="fa-solid fa-cubes"></i></div>
                     <h2>Order Block Matrix</h2>
-                    <p>Live heatmaps and institutional order flow mapping will appear here.</p>
-                    <div class="loading-spinner"></div>
+                    <p>Institutional order flow and liquidity voids will render here.</p>
                 </div>
             </div>
 
-            <!-- SECTION 3: Backtesting -->
-            <div id="section-backtesting" class="content-section">
-                <div class="glass-card placeholder-card">
-                    <h2>Historical Backtesting Engine</h2>
-                    <p>Run Monte Carlo simulations and historical SMC models.</p>
-                    <button class="action-btn" style="margin-top: 1rem;">Start Simulation</button>
+            <!-- VIEW: Backtesting (Placeholder) -->
+            <div id="view-backtesting" class="view-section">
+                <div class="bento-card empty-state">
+                    <div class="empty-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h2>Historical Simulation Lab</h2>
+                    <p>Configure parameters to backtest SMC logic against historical tick data.</p>
                 </div>
             </div>
 
-            <!-- SECTION 4: Settings -->
-            <div id="section-settings" class="content-section">
-                <div class="glass-card placeholder-card">
-                    <h2>System Configurations</h2>
-                    <p>Adjust risk parameters, FVG sensitivities, and API endpoints.</p>
+            <!-- VIEW: Settings (Placeholder) -->
+            <div id="view-settings" class="view-section">
+                <div class="bento-card empty-state">
+                    <div class="empty-icon"><i class="fa-solid fa-sliders"></i></div>
+                    <h2>Algorithm Parameters</h2>
+                    <p>Adjust risk-per-trade, max daily drawdown, and MetaTrader 5 API routing.</p>
                 </div>
             </div>
-
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
