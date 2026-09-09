@@ -1,118 +1,97 @@
+/* ==========================================================================
+   LiquidityLogic - Performant Interactivity Script
+   ========================================================================== */
+
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // ---------------------------------------------------------------------------
-    // 1. SPA Navigation Logic (Smooth Section Switching)
-    // ---------------------------------------------------------------------------
-    const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.content-section');
+
+    // 1. Snappy SPA Navigation (Zero Lag DOM swapping)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const views = document.querySelectorAll('.view-section');
     const pageTitle = document.getElementById('pageTitle');
 
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Get target section ID and title text
-            const targetId = item.getAttribute('data-target');
-            const newTitle = item.querySelector('span').textContent;
+    const titleMap = {
+        'dashboard': 'Algorithmic Overview',
+        'orderblocks': 'Order Block Matrix',
+        'backtesting': 'Historical Simulation Lab',
+        'settings': 'System Parameters'
+    };
 
-            // 1. Update Navigation Active State
-            navItems.forEach(nav => nav.classList.remove('active'));
-            item.classList.add('active');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active states
+            navButtons.forEach(b => b.classList.remove('active'));
+            views.forEach(v => v.classList.remove('active'));
 
-            // 2. Update Header Title
-            if (targetId === 'section-dashboard') {
-                pageTitle.textContent = 'Algorithmic Overview';
-            } else {
-                pageTitle.textContent = newTitle;
-            }
+            // Add active state to clicked button
+            btn.classList.add('active');
 
-            // 3. Smoothly switch sections
-            sections.forEach(sec => {
-                // Remove active class from all
-                sec.classList.remove('active');
-                sec.style.display = 'none';
-                
-                // Add active class to target (with slight timeout to trigger CSS animation)
-                if (sec.id === targetId) {
-                    sec.style.display = 'flex';
-                    // Small delay ensures display:flex is registered before opacity animates
-                    setTimeout(() => {
-                        sec.classList.add('active');
-                    }, 10);
-                }
-            });
+            // Find and show corresponding view
+            const targetId = btn.getAttribute('data-target');
+            document.getElementById(`view-${targetId}`).classList.add('active');
+
+            // Update title instantly
+            pageTitle.textContent = titleMap[targetId];
         });
     });
 
-    // ---------------------------------------------------------------------------
-    // 2. Real-Time UTC Clock Component
-    // ---------------------------------------------------------------------------
-    const liveClockElement = document.getElementById('liveClock');
-
+    // 2. Performant UTC Clock (No DOM layout thrashing)
+    const clockEl = document.getElementById('liveClock');
     function updateClock() {
         const now = new Date();
-        const hours = String(now.getUTCHours()).padStart(2, '0');
-        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-        liveClockElement.textContent = `${hours}:${minutes}:${seconds} UTC`;
+        clockEl.textContent = now.toISOString().substring(11, 19) + ' UTC';
     }
     updateClock();
     setInterval(updateClock, 1000);
 
-    // ---------------------------------------------------------------------------
-    // 3. System Active Toggle Logic
-    // ---------------------------------------------------------------------------
-    const systemToggle = document.getElementById('systemToggle');
-    const toggleStatusText = document.getElementById('toggleStatusText');
-
-    systemToggle.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            toggleStatusText.textContent = "Active";
-            toggleStatusText.style.color = "var(--text-main)";
-        } else {
-            toggleStatusText.textContent = "Paused";
-            toggleStatusText.style.color = "var(--accent-warning)";
-        }
+    // 3. System Toggle
+    const toggle = document.getElementById('systemToggle');
+    const statusText = document.getElementById('systemStatusText');
+    toggle.addEventListener('change', (e) => {
+        statusText.textContent = e.target.checked ? "System Active" : "Execution Paused";
+        statusText.style.color = e.target.checked ? "var(--text-primary)" : "var(--accent-orange)";
     });
 
-    // ---------------------------------------------------------------------------
-    // 4. Data Population for Recent Executions
-    // ---------------------------------------------------------------------------
-    const executionsData = [
-        { timestamp: "12:32:14", pair: "EUR/USD", setup: "FVG Mitigation", size: "1.50", entryPrice: "1.08542", exitPrice: "1.08890", result: "+$522.00", isWin: true },
-        { timestamp: "11:15:40", pair: "GBP/USD", setup: "Order Block (OB)", size: "1.00", entryPrice: "1.26410", exitPrice: "1.26120", result: "-$290.00", isWin: false },
-        { timestamp: "09:45:02", pair: "USD/JPY", setup: "Liquidity Sweep", size: "2.00", entryPrice: "151.420", exitPrice: "151.850", result: "+$860.00", isWin: true }
+    // 4. Data Population
+    const tradeData = [
+        { time: "12:32:14", asset: "EURUSD", pattern: "FVG Entry", vol: "1.50", entry: "1.08542", result: "+$522.00" },
+        { time: "11:15:40", asset: "GBPUSD", pattern: "Bullish OB", vol: "1.00", entry: "1.26410", result: "-$290.00" },
+        { time: "09:45:02", asset: "XAUUSD", pattern: "Liquidity Sweep", vol: "2.00", entry: "2041.50", result: "+$860.00" },
+        { time: "08:12:35", asset: "AUDUSD", pattern: "FVG Mitigation", vol: "1.25", entry: "0.65210", result: "+$337.50" }
     ];
 
-    const tableBody = document.getElementById('executionsTableBody');
+    const tbody = document.getElementById('executionBody');
 
-    function renderExecutionsTable(data) {
-        tableBody.innerHTML = '';
-        data.forEach(exec => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${exec.timestamp}</td>
-                <td><strong>${exec.pair}</strong></td>
-                <td><span style="color: var(--accent-primary); font-weight: 500;">${exec.setup}</span></td>
-                <td>${exec.size}</td>
-                <td>${exec.entryPrice}</td>
-                <td>${exec.exitPrice}</td>
-                <td style="color: ${exec.isWin ? 'var(--accent-green)' : 'var(--accent-danger)'}; font-weight: 700;">${exec.result}</td>
+    function renderTable(data) {
+        // Using string building to minimize DOM reflows
+        let html = '';
+        data.forEach(trade => {
+            const isWin = trade.result.includes('+');
+            html += `
+                <tr>
+                    <td class="font-mono text-secondary">${trade.time}</td>
+                    <td><strong>${trade.asset}</strong></td>
+                    <td><span class="setup-badge">${trade.pattern}</span></td>
+                    <td class="font-mono">${trade.vol}</td>
+                    <td class="font-mono">${trade.entry}</td>
+                    <td class="${isWin ? 'result-win' : 'text-orange font-mono'}">${trade.result}</td>
+                </tr>
             `;
-            tableBody.appendChild(row);
         });
+        tbody.innerHTML = html;
     }
 
-    renderExecutionsTable(executionsData);
+    renderTable(tradeData);
 
-    // Refresh Feed Simulation
-    const refreshTableBtn = document.getElementById('refreshTableBtn');
-    refreshTableBtn.addEventListener('click', () => {
-        refreshTableBtn.innerHTML = '<i class="fa-solid fa-rotate fa-spin"></i> Syncing...';
+    // 5. Refresh Simulation
+    const refreshBtn = document.getElementById('refreshBtn');
+    refreshBtn.addEventListener('click', () => {
+        const icon = refreshBtn.querySelector('i');
+        icon.classList.add('fa-spin');
+        
         setTimeout(() => {
-            const randomizedData = [...executionsData].sort(() => Math.random() - 0.5);
-            renderExecutionsTable(randomizedData);
-            refreshTableBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Refresh Feed';
-        }, 500);
+            const shuffled = [...tradeData].sort(() => Math.random() - 0.5);
+            renderTable(shuffled);
+            icon.classList.remove('fa-spin');
+        }, 400);
     });
 });
