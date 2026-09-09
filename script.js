@@ -1,10 +1,10 @@
 /* ==========================================================================
-   LiquidityLogic - Performant Interactivity Script
+   LiquidityLogic - Instantaneous Execution Script
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Snappy SPA Navigation (Zero Lag DOM swapping)
+    // 1. Instantaneous SPA Navigation
     const navButtons = document.querySelectorAll('.nav-btn');
     const views = document.querySelectorAll('.view-section');
     const pageTitle = document.getElementById('pageTitle');
@@ -18,23 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active states
             navButtons.forEach(b => b.classList.remove('active'));
             views.forEach(v => v.classList.remove('active'));
 
-            // Add active state to clicked button
             btn.classList.add('active');
-
-            // Find and show corresponding view
             const targetId = btn.getAttribute('data-target');
             document.getElementById(`view-${targetId}`).classList.add('active');
-
-            // Update title instantly
             pageTitle.textContent = titleMap[targetId];
         });
     });
 
-    // 2. Performant UTC Clock (No DOM layout thrashing)
+    // 2. High-Performance Clock
     const clockEl = document.getElementById('liveClock');
     function updateClock() {
         const now = new Date();
@@ -62,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('executionBody');
 
     function renderTable(data) {
-        // Using string building to minimize DOM reflows
         let html = '';
         data.forEach(trade => {
             const isWin = trade.result.includes('+');
@@ -92,6 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const shuffled = [...tradeData].sort(() => Math.random() - 0.5);
             renderTable(shuffled);
             icon.classList.remove('fa-spin');
-        }, 400);
+        }, 200);
     });
 });
