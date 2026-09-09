@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantSMC - Quantitative Trading Dashboard</title>
+    <!-- Google Fonts for crisp financial typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN for lightweight icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-chart-line-up brand-icon"></i>
+                <span class="brand-title">Quant<span class="accent-text">SMC</span></span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-cubes"></i>
+                    <span>Order Blocks</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Backtesting</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Strategy Lab</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="algo-status-badge">
+                    <span class="pulse-dot"></span>
+                    <span>SMC Engine v4.2</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Algorithmic Overview</h1>
+                    <p class="subtitle">Smart Money Concepts & Fair Value Gap (FVG) Automated Engine</p>
+                </div>
+                <div class="header-right">
+                    <div class="live-clock" id="liveClock">00:00:00 UTC</div>
+                    <div class="system-toggle-container">
+                        <label class="switch">
+                            <input type="checkbox" id="systemToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label" id="toggleStatusText">System Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Metrics Grid -->
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span>Daily P&L</span>
+                        <i class="fa-solid fa-wallet icon-success"></i>
+                    </div>
+                    <div class="metric-value text-success" id="dailyPnL">+$3,420.50</div>
+                    <div class="metric-sub text-success">
+                        <i class="fa-solid fa-arrow-trend-up"></i> +4.2% vs yesterday
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span>Win Rate (%)</span>
+                        <i class="fa-solid fa-bullseye icon-blue"></i>
+                    </div>
+                    <div class="metric-value" id="winRate">68.4%</div>
+                    <div class="metric-sub">Based on 45 active samples</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span>Total Executions</span>
+                        <i class="fa-solid fa-bolt icon-warning"></i>
+                    </div>
+                    <div class="metric-value" id="totalExecutions">128</div>
+                    <div class="metric-sub">12 active orders pending structure</div>
+                </div>
+            </section>
+
+            <!-- Visual Interface / Mock Charting Area -->
+            <section class="chart-section">
+                <div class="section-header">
+                    <h2>Live Price Action & SMC Mapping</h2>
+                    <div class="chart-legends">
+                        <span class="legend-item"><span class="color-box fvg-box"></span> FVG Zone</span>
+                        <span class="legend-item"><span class="color-box ob-box"></span> Order Block (OB)</span>
+                        <span class="legend-item"><span class="color-box entry-box"></span> Algorithmic Entry</span>
+                    </div>
+                </div>
+                
+                <div class="mock-chart-container">
+                    <!-- Dynamic background grid for chart -->
+                    <div class="chart-grid-overlay"></div>
+                    
+                    <!-- FVG and Order Block Zones -->
+                    <div class="smc-zone fvg-zone" style="top: 25%; height: 18%; left: 35%; width: 40%;">
+                        <span class="zone-tag">FVG Equilibrium (1.0845 - 1.0870)</span>
+                    </div>
+                    <div class="smc-zone ob-zone" style="top: 60%; height: 22%; left: 15%; width: 28%;">
+                        <span class="zone-tag">Bullish OB (1.0790)</span>
+                    </div>
+
+                    <!-- Candlestick Trend / Path Vector Simulation -->
+                    <svg class="chart-svg" viewBox="0 0 1000 300" preserveAspectRatio="none">
+                        <path d="M 0,220 L 80,190 L 130,210 L 200,140 L 260,160 L 320,95 L 390,110 L 450,55 L 530,90 L 600,40 L 680,75 L 750,30 L 820,60 L 900,20 L 1000,45" fill="none" stroke="var(--accent-blue)" stroke-width="2.5" />
+                        <!-- Entry Markers -->
+                        <circle cx="390" cy="110" r="6" fill="var(--accent-green)" class="pulse-marker" />
+                        <circle cx="750" cy="30" r="6" fill="var(--accent-green)" class="pulse-marker" />
+                    </svg>
+
+                    <!-- Chart Annotation Callouts -->
+                    <div class="chart-annotation" style="top: 32%; left: 58%;">
+                        <i class="fa-solid fa-crosshairs"></i> Mitigation Target
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table Section -->
+            <section class="table-section">
+                <div class="section-header">
+                    <h2>Recent Executions</h2>
+                    <button class="action-btn" id="refreshTableBtn">
+                        <i class="fa-solid fa-rotate"></i> Refresh Feed
+                    </button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp (UTC)</th>
+                                <th>Pair</th>
+                                <th>Setup Type</th>
+                                <th>Size (Lots)</th>
+                                <th>Entry Price</th>
+                                <th>Exit Price</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="executionsTableBody">
+                            <!-- Populated dynamically via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
